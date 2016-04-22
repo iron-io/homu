@@ -79,3 +79,6 @@ secret = ""
 #
 ## String label set by status updates
 #context = ""
+#
+## Uncomment the following line to use Circle for running tests.
+#[repo.NAME.circle]

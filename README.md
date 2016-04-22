@@ -3,12 +3,13 @@
 [![Hommando]][Akemi Homura]
 
 Homu is a bot that integrates with GitHub and your favorite continuous
-integration service, such as [Buildbot] or [Travis CI].
+integration service, such as [Buildbot], [Travis CI] or [Circle CI].
 
 [Hommando]: https://i.imgur.com/j0jNvHF.png
 [Akemi Homura]: https://wiki.puella-magi.net/Homura_Akemi
 [Buildbot]: http://buildbot.net/
 [Travis CI]: https://travis-ci.org/
+[Circle CI]: https://circleci.com/
 
 ## Why is it needed?
 
@@ -121,6 +122,22 @@ pip install -e homu
     branches:
         only:
             - auto
+    ```
+
+ - Circle CI
+
+   Enable the circle builder in cfg.toml.
+   Insert the following code in the `circle.yml` file:
+
+    ```yaml
+    general:
+      branches:
+        only:
+          - auto
+    
+    notify:
+      webhooks:
+        - url: http://HOST:PORT/circle
     ```
 
 [settings]: https://github.com/settings/applications

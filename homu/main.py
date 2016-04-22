@@ -544,6 +544,9 @@ def start_build(state, repo_cfgs, buildbot_slots, logger, db, git_cfg):
     elif 'travis' in repo_cfg:
         branch = repo_cfg.get('branch', {}).get('auto', 'auto')
         builders = ['travis']
+    elif 'circle' in repo_cfg:
+        branch = repo_cfg.get('branch', {}).get('auto', 'auto')
+        builders = ['circle']
     elif 'status' in repo_cfg:
         branch = repo_cfg.get('branch', {}).get('auto', 'auto')
         builders = ['status']
@@ -952,6 +955,8 @@ def main():
                     builders = repo_cfg['buildbot']['builders']
                 elif 'travis' in repo_cfg:
                     builders = ['travis']
+                elif 'circle' in repo_cfg:
+                    builders = ['circle']
                 elif 'status' in repo_cfg:
                     builders = ['status']
                 else:

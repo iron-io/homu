@@ -583,6 +583,29 @@ def travis():
 
     return 'OK'
 
+@post('/circle')
+def circle():
+    logger = g.logger.getChild('circle')
+
+    try:
+        info = request.json['payload']
+    except ValueError:
+        lazy_debug(logger, lambda: 'Invalid JSON from Circle: {}'.format(request.json))
+        return 'OK'
+
+    try: state, repo_label = find_state(info['vcs_revision'])
+    except ValueError:
+        lazy_debug(logger, lambda: 'Invalid commit ID from Circle: {}'.format(info['vcs_revision']))
+        return 'OK'
+
+    lazy_debug(logger, lambda: 'state: {}, {}'.format(state, state.build_res_summary()))
+    succ = info['status'] == 'success'
+    repo_cfg = g.repo_cfgs[repo_label]
+
+    report_build_res(succ, info['build_url'], 'circle', state, logger, repo_cfg)
+
+    return 'OK'
+
 def synch(user_gh, state, repo_label, repo_cfg, repo):
     if not repo.is_collaborator(user_gh.user().login):
         abort(400, 'You are not a collaborator')
