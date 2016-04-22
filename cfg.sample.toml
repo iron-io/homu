@@ -82,3 +82,7 @@ secret = ""
 #
 ## Uncomment the following line to use Circle for running tests.
 #[repo.NAME.circle]
+#
+## Set to a unique string. Use the same string in the webhook URL:
+## http://HOST:PORT/circle/<secret>
+#secret = ""

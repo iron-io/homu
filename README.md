@@ -126,7 +126,7 @@ pip install -e homu
 
  - Circle CI
 
-   Enable the circle builder in cfg.toml.
+   Enable the circle builder in cfg.toml and add a secret.
    Insert the following code in the `circle.yml` file:
 
     ```yaml
@@ -137,7 +137,7 @@ pip install -e homu
     
     notify:
       webhooks:
-        - url: http://HOST:PORT/circle
+        - url: http://HOST:PORT/circle/<secret>
     ```
 
 [settings]: https://github.com/settings/applications

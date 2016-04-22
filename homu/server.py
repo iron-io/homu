@@ -583,8 +583,8 @@ def travis():
 
     return 'OK'
 
-@post('/circle')
-def circle():
+@post('/circle/<secret>')
+def circle(secret):
     logger = g.logger.getChild('circle')
 
     try:
@@ -599,9 +599,13 @@ def circle():
         return 'OK'
 
     lazy_debug(logger, lambda: 'state: {}, {}'.format(state, state.build_res_summary()))
-    succ = info['status'] == 'success'
     repo_cfg = g.repo_cfgs[repo_label]
 
+    if secret != repo_cfg['circle']['secret']:
+        logger.warn('Wrong secret in Circle endpoint: {}'.format(secret))
+        abort(400, 'Authorization failed')
+
+    succ = info['status'] == 'success'
     report_build_res(succ, info['build_url'], 'circle', state, logger, repo_cfg)
 
     return 'OK'
